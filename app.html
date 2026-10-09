@@ -70,21 +70,21 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <a href="index.html">Home</a>
 <a href="app.html" class="on">App</a>
 <a href="docs.html">Docs</a>
-<select id="netSel"><option value="968" selected>Testnet 968</option><option value="677">Mainnet 677</option></select>
+<select id="netSel"><option value="968">Testnet 968</option><option value="677" selected>Mainnet 677</option></select>
 <button class="btn btn-a" id="connectBtn">Connect wallet</button>
 </div>
 </div></nav>
 
 <div class="ticker">
-<div class="cell"><span class="k">TestWBOT reserve</span><span class="v" id="tR0">—</span></div>
+<div class="cell"><span class="k">WBOT reserve</span><span class="v" id="tR0">—</span></div>
 <div class="cell"><span class="k">LoopUSD reserve</span><span class="v" id="tR1">—</span></div>
-<div class="cell"><span class="k">Price (LUSD per TWBOT)</span><span class="v" id="tPrice">—</span></div>
+<div class="cell"><span class="k">Price (LUSD per WBOT)</span><span class="v" id="tPrice">—</span></div>
 </div>
 
 <div class="wrap">
 <div class="page-head">
 <h1>Swap &amp; provide liquidity</h1>
-<span class="badge">Pool · chain 968</span>
+<span class="badge">Pool · chain 677</span>
 </div>
 
 <div class="main-grid">
@@ -93,18 +93,18 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div class="panel-head"><h3>Swap</h3><div class="dot"></div></div>
 <div class="row"><label>Direction</label>
 <select id="dirSel">
-<option value="LUSD_TO_TW">LoopUSD → TestWBOT</option>
-<option value="TW_TO_LUSD">TestWBOT → LoopUSD</option>
+<option value="LUSD_TO_TW">LoopUSD → WBOT</option>
+<option value="TW_TO_LUSD">WBOT → LoopUSD</option>
 </select>
 <span></span></div>
 <div class="row"><label>Amount in</label><input id="swapAmt" type="number" step="any" placeholder="50.0"><span id="inSym" class="mono" style="color:var(--accent)">LUSD</span></div>
-<div class="quote-box">You receive ≈ <b id="swapQuote">—</b> <span id="outSym" class="mono">TWBOT</span> <span style="font-size:12px">· fee 0.3% · slippage tolerance 2%</span></div>
+<div class="quote-box">You receive ≈ <b id="swapQuote">—</b> <span id="outSym" class="mono">WBOT</span> <span style="font-size:12px">· fee 0.3% · slippage tolerance 2%</span></div>
 <div class="row" style="border-bottom:none"><span></span><span></span><button class="btn btn-a" id="swapBtn">Swap →</button></div>
 </div>
 
 <div class="panel">
 <div class="panel-head"><h3>Liquidity</h3><div class="dot"></div></div>
-<div class="row"><label>Add TWBOT</label><input id="addTw" type="number" step="any" placeholder="10.0"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
+<div class="row"><label>Add WBOT</label><input id="addTw" type="number" step="any" placeholder="10.0"><span class="mono" style="color:var(--accent)">WBOT</span></div>
 <div class="row"><label>Add LUSD</label><input id="addLu" type="number" step="any" placeholder="20.0"><span class="mono" style="color:var(--accent)">LUSD</span></div>
 <div class="row" style="border-bottom:none"><label>Burn shares</label><input id="rmShares" type="number" step="any" placeholder="shares"><button class="btn btn-g" id="rmBtn">Remove →</button></div>
 <div class="row" style="border-bottom:none;grid-template-columns:1fr auto"><span class="hint" style="padding:0">Keep the ratio ≈ reserve ratio (currently <b id="ratioHint" class="mono">—</b>).</span><button class="btn btn-a" id="addBtn">Add liquidity →</button></div>
@@ -117,7 +117,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <div class="kv"><span>Your LP shares</span><b id="myShares">—</b></div>
 <div class="kv"><span>Share of pool</span><b id="myPct">—</b></div>
 <div class="kv"><span>Redeem value</span><b id="myValue">—</b></div>
-<div class="kv"><span>TestWBOT balance</span><b id="balTw">—</b></div>
+<div class="kv"><span>WBOT balance</span><b id="balTw">—</b></div>
 <div class="kv"><span>LoopUSD balance</span><b id="balLu">—</b></div>
 </div>
 <div class="panel">
@@ -137,16 +137,16 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 </div>
 
 <footer><div class="wrap">
-<p style="margin-bottom:2px">SwapLoop — AMM swap on BOT Chain. Testnet deployment; test tokens have no monetary value.</p>
+<p style="margin-bottom:2px">SwapLoop — AMM swap on BOT Chain. Live on mainnet; real assets with real value.</p>
 <div class="proof">
-<div class="proof-title">Proof on BOT Testnet</div>
+<div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
-<span>Chain ID</span><span class="val">968</span>
-<span>Contract</span><span class="val">0xe0756F41720f1766cE67d6F20B92186A03d0dD7C</span>
+<span>Chain ID</span><span class="val">677</span>
+<span>Contract</span><span class="val">0xbe0169c1479762688B0453e1770bAd9CE3e4D2f8</span>
 </div>
 <div class="proof-links">
 <a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
-<a href="https://scan.bohr.life/address/0xe0756F41720f1766cE67d6F20B92186A03d0dD7C" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
+<a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
 </div>
 </div>
 </div></footer>

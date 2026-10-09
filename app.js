@@ -44,6 +44,11 @@ const CONTRACTS = {
     twbot: '0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0',
     lusd: '0x9b3DC959CE2ABCbC8E9E0ca66d8Cba8FC90f1eb0',
   },
+  677: {
+    swap: '0xbe0169c1479762688B0453e1770bAd9CE3e4D2f8',
+    twbot: '0xD5452816194a3784dBa983426cCe7c122F4abd30',
+    lusd: '0x17f8eD99cd60F2FA2023f60279a86785fbd5077c',
+  },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -51,7 +56,7 @@ const fmt = (n, d = 18) => Number(ethers.formatUnits(n, d)).toLocaleString(undef
 
 let appkit = null;
 let readProvider;
-let currentChainId = 968;
+let currentChainId = 677;
 let account = null;
 
 function initAppKit() {
@@ -148,14 +153,14 @@ async function updateQuote() {
     const amtIn = ethers.parseUnits(amt, 18);
     const out = sw.getAmountOut(amtIn, rIn, rOut);
     q.textContent = fmt(await out, 4);
-    if ($('inSym')) $('inSym').textContent = toBig ? 'LUSD' : 'TWBOT';
-    if ($('outSym')) $('outSym').textContent = toBig ? 'TWBOT' : 'LUSD';
+    if ($('inSym')) $('inSym').textContent = toBig ? 'LUSD' : 'WBOT';
+    if ($('outSym')) $('outSym').textContent = toBig ? 'WBOT' : 'LUSD';
   } catch (e) { q.textContent = '—'; }
 }
 
 async function signerOrAlert() {
   if (!account) { appkit?.open(); return null; }
-  if (currentChainId !== 968) { alert('Demo contracts are deployed on Testnet 968. Switch network in your wallet.'); return null; }
+  if (!CONTRACTS[currentChainId]) { alert('No contracts on this network in this app. Switch to BOT Chain 677 or Testnet 968.'); return null; }
   const s = await appkit?.getSigner();
   if (!s) { appkit?.open(); return null; }
   return s;
@@ -237,7 +242,7 @@ async function doRemove() {
 }
 
 function boot() {
-  readProvider = new ethers.JsonRpcProvider('https://rpc.bohr.life');
+  readProvider = new ethers.JsonRpcProvider(currentChainId === 677 ? 'https://rpc.botchain.ai' : 'https://rpc.bohr.life');
   initAppKit();
   $('swapBtn')?.addEventListener('click', doSwap);
   $('addBtn')?.addEventListener('click', doAdd);
