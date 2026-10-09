@@ -74,9 +74,9 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
 <h2>Deployment</h2>
 <div class="addr-box">
 <div class="k">Chain</div><div class="v">BOT Chain Mainnet · chainId 677 · RPC https://rpc.botchain.ai · explorer https://scan.botchain.ai</div>
-<div class="k">SwapLoop</div><div class="v"><a href="https://scan.botchain.ai/address/0xbe0169c1479762688B0453e1770bAd9CE3e4D2f8" target="_blank" rel="noopener">0xbe0169c1479762688B0453e1770bAd9CE3e4D2f8</a> · verified ✓</div>
+<div class="k">SwapLoop</div><div class="v"><a href="https://scan.botchain.ai/address/0x2E13450270a829a8DFe248C826156EAB2c66b9c4" target="_blank" rel="noopener">0x2E13450270a829a8DFe248C826156EAB2c66b9c4</a> · verified ✓</div>
 <div class="k">WBOT</div><div class="v">WBOT <a href="https://scan.botchain.ai/address/0xD5452816194a3784dBa983426cCe7c122F4abd30" target="_blank" rel="noopener">0xD5452816194a3784dBa983426cCe7c122F4abd30</a></div>
-<div class="k">LoopUSD</div><div class="v"><a href="https://scan.botchain.ai/address/0x17f8eD99cd60F2FA2023f60279a86785fbd5077c" target="_blank" rel="noopener">0x17f8eD99cd60F2FA2023f60279a86785fbd5077c</a> · verified ✓ · auto-created at SwapLoop deploy</div>
+<div class="k">LoopUSD</div><div class="v"><a href="https://scan.botchain.ai/address/0x6b7582f7a1Dd17f1706819FEC2c12e618aA997f4" target="_blank" rel="noopener">0x6b7582f7a1Dd17f1706819FEC2c12e618aA997f4</a> · verified ✓ · auto-created at SwapLoop deploy</div>
 <div class="k">Compiler</div><div class="v">solc 0.8.30+commit.73712a01 · optimizer 200 runs · evmVersion cancun · metadata.bytecodeHash none · flattened-code verification</div>
 <div class="k">Tokens</div><div class="v">WBOT = Wrapped BOT (real) · LoopUSD = pool quote token auto-created at deploy (1M to deployer)</div>
 </div>
@@ -115,17 +115,17 @@ proportional slice of BOTH reserves: amountX = shares * reserveX / totalShares</
 
 <section id="demo">
 <h2>Demo activity</h2>
-<p>Six testnet demo transactions executed after deployment — all status ok, all methods decode by name on the explorer:</p>
+<p>Six mainnet demo transactions executed after deployment — all status ok, all methods decode by name on BOTScan:</p>
 <table>
-<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th></tr>
-<tr><td>1</td><td class="mono">addLiquidity</td><td>Wallet A</td><td>Seed the pool (TWBOT + LoopUSD)</td></tr>
-<tr><td>2</td><td class="mono">swap</td><td>Wallet A</td><td>LUSD → TWBOT</td></tr>
-<tr><td>3</td><td class="mono">swap</td><td>Wallet B</td><td>Opposite direction</td></tr>
-<tr><td>4</td><td class="mono">swap</td><td>Wallet C</td><td>Third-party trade</td></tr>
-<tr><td>5</td><td class="mono">addLiquidity</td><td>Wallet B</td><td>Second LP joins</td></tr>
-<tr><td>6</td><td class="mono">removeLiquidity</td><td>Wallet A</td><td>Partial exit with accrued fees</td></tr>
+<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th><th>Tx</th></tr>
+<tr><td>1</td><td class="mono">addLiquidity</td><td>Wallet A</td><td>Seed the pool: 0.02 WBOT + 40 LUSD</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x6c4a2c3c8af4477c3482d7f9016985a836538ea969e62b935188103c10b3346c" target="_blank" rel="noopener">0x6c4a2c3c…346c</a></td></tr>
+<tr><td>2</td><td class="mono">swap</td><td>Wallet B</td><td>LUSD → WBOT (20 LUSD in)</td><td class="mono"><a href="https://scan.botchain.ai/tx/0x6a6e48711e47e4f28a781163c26bb1593deb763bf2644a549933d488d20b6a32" target="_blank" rel="noopener">0x6a6e4871…6a32</a></td></tr>
+<tr><td>3</td><td class="mono">swap</td><td>Wallet C</td><td>WBOT → LUSD (0.005 WBOT in)</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xed59cbdbee39890a1732346822342dc4f4f6fe45e4f729a2719fd72864f19da6" target="_blank" rel="noopener">0xed59cbdb…9da6</a></td></tr>
+<tr><td>4</td><td class="mono">addLiquidity</td><td>Wallet B</td><td>Second LP joins: 0.01 WBOT + 20 LUSD</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xfa1fe4812cd787d3f88bb85aa00ff5c9aee8f951cb93edf511e0bb914a6db053" target="_blank" rel="noopener">0xfa1fe481…b053</a></td></tr>
+<tr><td>5</td><td class="mono">swap</td><td>Wallet A</td><td>WBOT → LUSD (0.005 WBOT in)</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xb25ce7be36759be350a918dd13a6ff6f64baa4b6b075c89ae880a3e7c21dd828" target="_blank" rel="noopener">0xb25ce7be…d828</a></td></tr>
+<tr><td>6</td><td class="mono">removeLiquidity</td><td>Wallet A</td><td>Exits half its LP shares + accrued fees</td><td class="mono"><a href="https://scan.botchain.ai/tx/0xdc6b768d13b0ef4575b234f32f80dad346befd29019492696273ad7dddd82cbe" target="_blank" rel="noopener">0xdc6b768d…2cbe</a></td></tr>
 </table>
-<p>Each project contract carries 7 testnet explorer transactions: 1 deploy + 6 demo.</p>
+<p>Each project contract carries 7 mainnet explorer transactions: 1 deploy + 6 demo.</p>
 </section>
 
 <section id="build">
@@ -145,7 +145,7 @@ node submit-verify-5-mainnet.mjs SwapLoop   # POST flattened-code → scan.botch
 <div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
 <span>Chain ID</span><span class="val">677</span>
-<span>Contract</span><span class="val">0xbe0169c1479762688B0453e1770bAd9CE3e4D2f8</span>
+<span>Contract</span><span class="val">0x2E13450270a829a8DFe248C826156EAB2c66b9c4</span>
 </div>
 <div class="proof-links">
 <a href="https://botchain.ai" target="_blank" rel="noopener" class="proof-link">BOT Chain Website &#8599;</a>
