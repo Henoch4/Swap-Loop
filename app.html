@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwapLoop — App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06090f;--panel:#0b111b;--panel2:#101827;--accent:#38bdf8;--accent2:#0ea5e9;--danger:#ef4444;--text:#e8f3fc;--muted:#7c93ab;--line:rgba(232,243,252,.09);--line2:rgba(232,243,252,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;line-height:1.55;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'Courier New',monospace}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--line);background:rgba(6,9,15,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.logo i{width:18px;height:18px;border-radius:50%;border:3px solid var(--accent);display:inline-block;box-shadow:0 0 14px rgba(56,189,248,.55)}
+.nav-links{display:flex;align-items:center;gap:22px;font-size:13.5px;color:var(--muted)}
+.nav-links a:hover,.nav-links a.on{color:var(--accent)}
+.btn{font-family:'Sora',sans-serif;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;transition:all .15s;min-height:40px}
+.btn-a{background:var(--accent);color:#041019}
+.btn-a:hover{background:var(--accent2)}
+.btn-g{background:transparent;color:var(--text);border:1px solid var(--line2)}
+.btn-g:hover{border-color:var(--accent)}
+select#netSel{background:var(--panel);border:1px solid var(--line2);border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;padding:9px;color:var(--text)}
+.ticker{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.ticker .cell{padding:16px 24px;border-right:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.ticker .cell:last-child{border-right:none}
+.ticker .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ticker .v{font-size:15px;font-weight:700;color:var(--accent)}
+.page-head{display:flex;justify-content:space-between;align-items:center;padding:30px 0 22px;gap:16px;flex-wrap:wrap}
+.page-head h1{font-size:27px;font-weight:800;letter-spacing:-.02em}
+.badge{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:6px 12px}
+.main-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start;padding-bottom:48px}
+@media(max-width:860px){.main-grid{grid-template-columns:1fr}.ticker{grid-template-columns:1fr}.ticker .cell{border-right:none;border-bottom:1px solid var(--line)}}
+.panel{background:var(--panel);border:1px solid var(--line2);border-radius:14px;margin-bottom:18px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.panel-head h3{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.panel-head .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.row{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;padding:15px 18px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row label{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.row input,.row select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:'Sora',sans-serif;font-size:14.5px;padding:10px 12px;min-height:42px}
+.row input:focus,.row select:focus{outline:2px solid var(--accent)}
+.kv{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.kv:last-child{border-bottom:none}
+.kv b{color:var(--text);font-weight:600}
+.quote-box{margin:0 18px 16px;background:var(--panel2);border:1px dashed var(--line2);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--muted)}
+.quote-box b{color:var(--accent);font-size:18px}
+.hint{padding:10px 18px 16px;font-size:12.5px;color:var(--muted)}
+footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.proof a{color:var(--accent)}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-in">
+<div class="logo"><i></i>SwapLoop</div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="app.html" class="on">App</a>
+<a href="docs.html">Docs</a>
+<select id="netSel"><option value="968" selected>Testnet 968</option><option value="677">Mainnet 677</option></select>
+<button class="btn btn-a" id="connectBtn">Connect wallet</button>
+</div>
+</div></nav>
+
+<div class="ticker">
+<div class="cell"><span class="k">TestWBOT reserve</span><span class="v" id="tR0">—</span></div>
+<div class="cell"><span class="k">LoopUSD reserve</span><span class="v" id="tR1">—</span></div>
+<div class="cell"><span class="k">Price (LUSD per TWBOT)</span><span class="v" id="tPrice">—</span></div>
+</div>
+
+<div class="wrap">
+<div class="page-head">
+<h1>Swap &amp; provide liquidity</h1>
+<span class="badge">Pool · chain 968</span>
+</div>
+
+<div class="main-grid">
+<div>
+<div class="panel">
+<div class="panel-head"><h3>Swap</h3><div class="dot"></div></div>
+<div class="row"><label>Direction</label>
+<select id="dirSel">
+<option value="LUSD_TO_TW">LoopUSD → TestWBOT</option>
+<option value="TW_TO_LUSD">TestWBOT → LoopUSD</option>
+</select>
+<span></span></div>
+<div class="row"><label>Amount in</label><input id="swapAmt" type="number" step="any" placeholder="50.0"><span id="inSym" class="mono" style="color:var(--accent)">LUSD</span></div>
+<div class="quote-box">You receive ≈ <b id="swapQuote">—</b> <span id="outSym" class="mono">TWBOT</span> <span style="font-size:12px">· fee 0.3% · slippage tolerance 2%</span></div>
+<div class="row" style="border-bottom:none"><span></span><span></span><button class="btn btn-a" id="swapBtn">Swap →</button></div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><h3>Liquidity</h3><div class="dot"></div></div>
+<div class="row"><label>Add TWBOT</label><input id="addTw" type="number" step="any" placeholder="10.0"><span class="mono" style="color:var(--accent)">TWBOT</span></div>
+<div class="row"><label>Add LUSD</label><input id="addLu" type="number" step="any" placeholder="20.0"><span class="mono" style="color:var(--accent)">LUSD</span></div>
+<div class="row" style="border-bottom:none"><label>Burn shares</label><input id="rmShares" type="number" step="any" placeholder="shares"><button class="btn btn-g" id="rmBtn">Remove →</button></div>
+<div class="row" style="border-bottom:none;grid-template-columns:1fr auto"><span class="hint" style="padding:0">Keep the ratio ≈ reserve ratio (currently <b id="ratioHint" class="mono">—</b>).</span><button class="btn btn-a" id="addBtn">Add liquidity →</button></div>
+</div>
+</div>
+
+<div>
+<div class="panel">
+<div class="panel-head"><h3>Your position</h3><div class="dot"></div></div>
+<div class="kv"><span>Your LP shares</span><b id="myShares">—</b></div>
+<div class="kv"><span>Share of pool</span><b id="myPct">—</b></div>
+<div class="kv"><span>Redeem value</span><b id="myValue">—</b></div>
+<div class="kv"><span>TestWBOT balance</span><b id="balTw">—</b></div>
+<div class="kv"><span>LoopUSD balance</span><b id="balLu">—</b></div>
+</div>
+<div class="panel">
+<div class="panel-head"><h3>Pool rules</h3><div class="dot"></div></div>
+<div class="kv"><span>Curve</span><b>x · y = k</b></div>
+<div class="kv"><span>Swap fee</span><b>0.30%</b></div>
+<div class="kv"><span>Fee destination</span><b>stays in pool</b></div>
+<div class="kv"><span>Router</span><b>none — direct pool</b></div>
+</div>
+<div class="panel">
+<div class="panel-head"><h3>Recent pool state</h3><div class="dot"></div></div>
+<div class="kv"><span>Total LP shares</span><b id="kShares">—</b></div>
+<div class="kv"><span>Swaps executed</span><b id="kSwaps">—</b></div>
+<div class="kv"><span>Implied price</span><b id="kPrice">—</b></div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="proof" style="display:grid;grid-template-columns:auto 1fr;gap:8px 18px;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:18px 20px">
+<span>Contract</span><b class="mono" style="color:var(--accent);overflow-wrap:anywhere">0xe0756F41720f1766cE67d6F20B92186A03d0dD7C</b>
+<span>Explorer</span><b><a class="mono" style="color:var(--accent)" href="https://scan.bohr.life/address/0xe0756F41720f1766cE67d6F20B92186A03d0dD7C" target="_blank" rel="noopener">scan.bohr.life ✓ verified</a></b>
+</div>
+</footer>
+
+<script type="importmap">
+{"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

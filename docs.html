@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwapLoop — Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06090f;--panel:#0b111b;--panel2:#101827;--accent:#38bdf8;--accent2:#0ea5e9;--text:#e8f3fc;--muted:#7c93ab;--line:rgba(232,243,252,.09);--line2:rgba(232,243,252,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:'Courier New',monospace}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--line);background:rgba(6,9,15,.9);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50}
+.nav-in{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.logo i{width:18px;height:18px;border-radius:50%;border:3px solid var(--accent);display:inline-block;box-shadow:0 0 14px rgba(56,189,248,.55)}
+.nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--muted);align-items:center}
+.nav-links a:hover,.nav-links a.on{color:var(--accent)}
+.docs-head{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+.docs-head h1{font-size:34px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.docs-head p{color:var(--muted);font-size:15px}
+.toc{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px;font-size:13px}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+h2{font-size:21px;font-weight:700;margin-bottom:14px}
+h3{font-size:15px;font-weight:700;margin:22px 0 8px;color:var(--accent)}
+p{color:var(--muted);margin-bottom:12px;font-size:14.5px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+td{color:var(--text)}
+td.mono,th.mono{font-family:'Courier New',monospace}
+code{background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1.5px 6px;font-family:'Courier New',monospace;font-size:13px;color:var(--accent)}
+pre{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 18px;overflow-x:auto;font-family:'Courier New',monospace;font-size:13px;color:var(--text);margin:12px 0;line-height:1.5}
+.addr-box{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:16px 18px;margin:14px 0;display:grid;grid-template-columns:130px 1fr;gap:10px;font-size:13.5px}
+.addr-box .k{color:var(--muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding-top:2px}
+.addr-box .v{overflow-wrap:anywhere;font-family:'Courier New',monospace}
+footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+<div class="logo"><i></i>SwapLoop</div>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="app.html">App</a>
+<a href="docs.html" class="on">Docs</a>
+</div>
+</div></nav>
+
+<div class="wrap">
+<div class="docs-head">
+<h1>SwapLoop Docs</h1>
+<p>Constant-product AMM on BOT Chain testnet (chain 968).</p>
+<div class="toc">
+<a href="#deploy">Deployment</a><a href="#math">Pricing math</a><a href="#abi">Contract API</a><a href="#demo">Demo activity</a><a href="#build">Build &amp; verify</a>
+</div>
+</div>
+
+<section id="deploy">
+<h2>Deployment</h2>
+<div class="addr-box">
+<div class="k">Chain</div><div class="v">BOT Chain Testnet · chainId 968 · RPC https://rpc.bohr.life · explorer https://scan.bohr.life</div>
+<div class="k">SwapLoop</div><div class="v"><a href="https://scan.bohr.life/address/0xe0756F41720f1766cE67d6F20B92186A03d0dD7C" target="_blank" rel="noopener">0xe0756F41720f1766cE67d6F20B92186A03d0dD7C</a> · verified ✓</div>
+<div class="k">TestWBOT</div><div class="v"><a href="https://scan.bohr.life/address/0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0" target="_blank" rel="noopener">0xD8FBaBf44B2dbb427d881F8Ea66F14D8287A55c0</a> · verified ✓</div>
+<div class="k">LoopUSD</div><div class="v"><a href="https://scan.bohr.life/address/0x9b3DC959CE2ABCbC8E9E0ca66d8Cba8FC90f1eb0" target="_blank" rel="noopener">0x9b3DC959CE2ABCbC8E9E0ca66d8Cba8FC90f1eb0</a> · verified ✓</div>
+<div class="k">Compiler</div><div class="v">solc 0.8.30+commit.73712a01 · optimizer 200 runs · evmVersion cancun · metadata.bytecodeHash none · flattened-code verification</div>
+<div class="k">Tokens</div><div class="v">TestWBOT = faucet ERC-20 (faucet() mints 1,000/tx) · LoopUSD = pool quote token (10M fixed)</div>
+</div>
+</section>
+
+<section id="math">
+<h2>Pricing math</h2>
+<p>SwapLoop is a single-pool x·y=k market maker (Uniswap-V1 style, no router):</p>
+<pre>getAmountOut(amountIn, rIn, rOut) =
+    (amountIn * 997 * rOut) / (rIn * 1000 + amountIn * 997)</pre>
+<p>The 0.3% fee (3/1000) stays inside the reserves, so it accrues to LP shares rather than to a fee recipient. Initial liquidity mints <code>sqrt(amount0 * amount1) - MINIMUM_LIQUIDITY</code> shares; subsequent adds mint <code>min(amount0 * total/r0, amount1 * total/r1)</code>.</p>
+<pre>removeLiquidity(shares) burns your shares and returns your
+proportional slice of BOTH reserves: amountX = shares * reserveX / totalShares</pre>
+</section>
+
+<section id="abi">
+<h2>Contract API</h2>
+<table>
+<tr><th>Function</th><th>Signature</th><th>Description</th></tr>
+<tr><td class="mono">getReserves</td><td class="mono">→ (uint256,uint256)</td><td>Current (rTWBOT, rLoopUSD)</td></tr>
+<tr><td class="mono">swap</td><td class="mono">swap(address tokenIn, uint256 amountIn, uint256 minOut)</td><td>Swap tokenIn→other, revert if below minOut</td></tr>
+<tr><td class="mono">getAmountOut</td><td class="mono">(uint256,uint256,uint256) → uint256</td><td>Quote, pure/view</td></tr>
+<tr><td class="mono">addLiquidity</td><td class="mono">(uint256 amountWbot, uint256 amountQuote)</td><td>Deposit both (tokens pulled via transferFrom); mints LP shares</td></tr>
+<tr><td class="mono">removeLiquidity</td><td class="mono">(uint256 shareAmount)</td><td>Burn shares → withdraw proportional slice of both reserves</td></tr>
+<tr><td class="mono">shares</td><td class="mono">(address) → uint256</td><td>LP balance per address</td></tr>
+<tr><td class="mono">swapCount</td><td class="mono">→ uint256</td><td>Number of swaps executed</td></tr>
+</table>
+<h3>Events</h3>
+<table>
+<tr><th>Event</th><th>Fields</th></tr>
+<tr><td class="mono">Swap</td><td class="mono">(address indexed user, address tokenIn, uint256 amountIn, uint256 amountOut, address tokenOut)</td></tr>
+<tr><td class="mono">LiquidityAdded</td><td class="mono">(address indexed user, uint256 amountTW, uint256 amountLU, uint256 shares)</td></tr>
+<tr><td class="mono">LiquidityRemoved</td><td class="mono">(address indexed user, uint256 amountTW, uint256 amountLU, uint256 shares)</td></tr>
+</table>
+</section>
+
+<section id="demo">
+<h2>Demo activity</h2>
+<p>Six demo transactions executed after deployment — all status ok, all methods decode by name on the explorer:</p>
+<table>
+<tr><th>#</th><th>Method</th><th>Actor</th><th>Description</th></tr>
+<tr><td>1</td><td class="mono">addLiquidity</td><td>Wallet A</td><td>Seed the pool (TWBOT + LoopUSD)</td></tr>
+<tr><td>2</td><td class="mono">swap</td><td>Wallet A</td><td>LUSD → TWBOT</td></tr>
+<tr><td>3</td><td class="mono">swap</td><td>Wallet B</td><td>Opposite direction</td></tr>
+<tr><td>4</td><td class="mono">swap</td><td>Wallet C</td><td>Third-party trade</td></tr>
+<tr><td>5</td><td class="mono">addLiquidity</td><td>Wallet B</td><td>Second LP joins</td></tr>
+<tr><td>6</td><td class="mono">removeLiquidity</td><td>Wallet A</td><td>Partial exit with accrued fees</td></tr>
+</table>
+<p>Each project contract carries 7 explorer transactions total: 1 deploy + 6 demo.</p>
+</section>
+
+<section id="build">
+<h2>Build &amp; verify</h2>
+<pre>cd botchain-builds/agent-vault
+node build5.mjs              # solc 0.8.30 → artifacts/swaploop/*.bin|.abi
+node deploy-5-testnet.mjs    # deploy to chain 968 → deployed-testnet-5.json
+node demo-txs-5-testnet.mjs  # funding + 6 demo txs
+node make-flat-5.mjs         # SPDX-dedupe flatten + byte-match recompile
+node submit-verify-5.mjs SwapLoop   # POST flattened-code → scan.bohr.life</pre>
+<p>Flatten output lives in <code>agent-vault/verify5/*.flat.sol</code>. Each flat was recompiled and byte-matched against the deployed runtime before submission (<code>FLAT MATCH</code> ×7).</p>
+</section>
+
+<footer>SwapLoop is a testnet deployment. Test tokens have no monetary value.</footer>
+</div>
+
+<script type="importmap">
+{"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
