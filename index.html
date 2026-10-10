@@ -127,6 +127,22 @@ function contracts() {
   return { c, sw: new ethers.Contract(c.swap, SWAP_ABI, p) };
 }
 const short = (a) => (a ? a.slice(0, 6) + '…' + a.slice(-4) : '—');
+
+function getProvider() {
+  try {
+    if (typeof appkit !== 'undefined' && appkit && typeof appkit.getWalletProvider === 'function') {
+      const p = appkit.getWalletProvider('eip155') || appkit.getWalletProvider();
+      if (p) return p;
+    }
+  } catch (e) {}
+  return null;
+}
+async function getSigner() {
+  const wp = getProvider();
+  if (!wp) { try { appkit.open(); } catch (e) {} return null; }
+  return new ethers.BrowserProvider(wp).getSigner();
+}
+
 const fmtS = (v) => { const n = Number(ethers.formatEther(v)); return (n > 0 && n < 1) ? n.toFixed(4) : fmt(n); };
 
 function initAppKit() {
@@ -222,7 +238,7 @@ $("#sg").onclick = async () => {
   if (!account) { appkit.open(); return; }
   try {
     const { c } = contracts();
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const me = await s.getAddress();
     const tokenIn = dir ? c.lusd : c.wbot;
     const amt = ethers.parseEther(String(a));
@@ -249,7 +265,7 @@ $("#lb").onclick = async () => {
   if (!account) { appkit.open(); return; }
   try {
     const { c } = contracts();
-    const s = await appkit.getSigner();
+    const s = await getSigner(); if (!s) return;;
     const me = await s.getAddress();
     const sw = new ethers.Contract(c.swap, SWAP_ABI, rpc());
     const [X, Y] = await sw.getReserves();
