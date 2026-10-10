@@ -8,7 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#06090f;--panel:#0b111b;--panel2:#101827;--accent:#38bdf8;--accent2:#0ea5e9;--text:#e8f3fc;--muted:#7c93ab;--line:rgba(232,243,252,.09);--line2:rgba(232,243,252,.18)}
+:root{--bg:#06121a;--fg:#e8f6f3;--mut:#8fb5ba;--line:#17384a;--card:#0d2330;--acc:#19e3c4;--acc2:#6c8cff;--onacc:#06121a}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#06121a;--fg:#e8f6f3;--mut:#8fb5ba;--line:#17384a;--card:#0d2330;--acc:#19e3c4;--acc2:#6c8cff;--onacc:#06121a}}@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef7f6;--fg:#06121a;--mut:#4c6a6e;--line:#c4e3df;--card:#ffffff;--acc:#007a6a;--acc2:#2b50ff;--onacc:#ffffff}}:root[data-theme="dark"]{--bg:#06121a;--fg:#e8f6f3;--mut:#8fb5ba;--line:#17384a;--card:#0d2330;--acc:#19e3c4;--acc2:#6c8cff;--onacc:#06121a}:root[data-theme="light"]{--bg:#eef7f6;--fg:#06121a;--mut:#4c6a6e;--line:#c4e3df;--card:#ffffff;--acc:#007a6a;--acc2:#2b50ff;--onacc:#ffffff}
+:root{--panel:var(--card);--panel2:var(--card);--text:var(--fg);--muted:var(--mut);--accent:var(--acc);--accent2:var(--acc2);--line2:var(--line);--hairline:var(--line);--hairline-strong:var(--line);--danger:#ef4444}
+body{font-family:'Sora',system-ui,sans-serif!important}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;line-height:1.6;min-height:100vh}
 a{color:var(--accent);text-decoration:none}
@@ -84,7 +86,7 @@ footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
 
 <section id="math">
 <h2>Pricing math</h2>
-<p>SwapLoop is a single-pool x·y=k market maker (Uniswap-V1 style, no router):</p>
+<p>SwapLoop is a single-pool market maker: every trade holds the product of reserves constant, so quotes are computed on-chain with no router or middleman.</p>
 <pre>getAmountOut(amountIn, rIn, rOut) =
     (amountIn * 997 * rOut) / (rIn * 1000 + amountIn * 997)</pre>
 <p>The 0.3% fee (3/1000) stays inside the reserves, so it accrues to LP shares rather than to a fee recipient. Initial liquidity mints <code>sqrt(amount0 * amount1) - MINIMUM_LIQUIDITY</code> shares; subsequent adds mint <code>min(amount0 * total/r0, amount1 * total/r1)</code>.</p>
@@ -140,7 +142,7 @@ node submit-verify-5-mainnet.mjs SwapLoop   # POST flattened-code → scan.botch
 </section>
 
 <footer><div class="wrap">
-<p style="margin-bottom:2px">SwapLoop — AMM swap on BOT Chain. Live on mainnet; real assets with real value.</p>
+<p style="margin-bottom:2px">SwapLoop — instant swaps on BOT Chain. Live on mainnet; real assets with real value.</p>
 <div class="proof">
 <div class="proof-title">Proof on BOT Mainnet</div>
 <div class="proof-grid">
@@ -152,6 +154,7 @@ node submit-verify-5-mainnet.mjs SwapLoop   # POST flattened-code → scan.botch
 <a href="https://scan.botchain.ai/" target="_blank" rel="noopener" class="proof-link">BOTScan Explorer &#8599;</a>
 </div>
 </div>
+<p style="margin-top:14px"><a href="index.html">Home</a> · <a href="app.html">Open the app →</a> · <a href="docs.html">Docs</a></p>
 </div></footer>
 </div>
 
@@ -159,5 +162,12 @@ node submit-verify-5-mainnet.mjs SwapLoop   # POST flattened-code → scan.botch
 {"imports":{"ethers":"https://esm.sh/ethers@6.13.2","@reown/appkit":"https://esm.sh/@reown/appkit@1.8.21","@reown/appkit-adapter-ethers":"https://esm.sh/@reown/appkit-adapter-ethers@1.8.21"}}
 </script>
 <script type="module" src="app.js"></script>
+<script>
+(function(){try{var s=localStorage.getItem('botchain-theme');if(s)document.documentElement.dataset.theme=s;}catch(e){}
+var b=document.createElement('button');b.id='themeBtn';b.title='Theme';b.textContent=document.documentElement.dataset.theme==='light'?'\u261E':'\u2600';
+b.style.cssText='border:1px solid var(--line2,var(--line));background:transparent;color:inherit;border-radius:99px;width:38px;height:38px;font-size:15px;cursor:pointer;margin-left:10px';
+b.onclick=function(){var n=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=n;try{localStorage.setItem('botchain-theme',n)}catch(e){}b.textContent=n==='light'?'\u261E':'\u2600';};
+var nav=document.querySelector('nav');if(nav)nav.appendChild(b);})();
+</script>
 </body>
 </html>
