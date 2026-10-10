@@ -64,7 +64,7 @@ function initAppKit() {
   if (!$('connectBtn')) return;
   const adapter = new EthersAdapter();
   appkit = new AppKit({
-    networks: [botTestnet, botMainnet],
+    networks: [botMainnet, botTestnet],
     adapters: [adapter],
     projectId: PROJECT_ID,
     themeMode: 'dark',
