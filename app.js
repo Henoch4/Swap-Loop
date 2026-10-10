@@ -36,6 +36,7 @@ const ERC20_ABI = [
   'function symbol() view returns (string)',
   'function approve(address,uint256) returns (bool)',
   'function allowance(address,address) view returns (uint256)',
+  'function deposit() payable',
 ];
 
 const CONTRACTS = {
@@ -152,7 +153,7 @@ async function updateQuote() {
     const rIn = toBig ? r1 : r0, rOut = toBig ? r0 : r1;
     const amtIn = ethers.parseUnits(amt, 18);
     const out = sw.getAmountOut(amtIn, rIn, rOut);
-    q.textContent = fmt(await out, 4);
+    q.textContent = fmt(await out);
     if ($('inSym')) $('inSym').textContent = toBig ? 'LUSD' : 'WBOT';
     if ($('outSym')) $('outSym').textContent = toBig ? 'WBOT' : 'LUSD';
   } catch (e) { q.textContent = '—'; }
@@ -178,6 +179,27 @@ async function ensureAllowance(tokenAddr, spender, amount) {
   return true;
 }
 
+async function ensureWbot(amount) {
+  const s = await signerOrAlert();
+  if (!s) return false;
+  const c = CONTRACTS[currentChainId];
+  const w = new ethers.Contract(c.twbot, ERC20_ABI, s);
+  const owner = await s.getAddress();
+  const bal = await w.balanceOf(owner);
+  if (bal >= amount) return true;
+  const shortfall = amount - bal;
+  const native = await s.provider.getBalance(owner);
+  const gasCost = ethers.parseEther('0.005');
+  if (native < shortfall + gasCost) {
+    needMsg('Need ' + fmt(shortfall + gasCost - native) + ' more BOT (wrap + gas) — fund the wallet first.');
+    return false;
+  }
+  needMsg('Wrapping BOT → WBOT…');
+  const tx = await w.deposit({ value: shortfall });
+  await tx.wait();
+  return true;
+}
+
 function needMsg(msg) {
   const box = document.querySelector('.quote-box');
   if (box) box.insertAdjacentHTML('beforeend', `<div style="font-size:12.5px;color:var(--accent);margin-top:6px">${msg}</div>`);
@@ -197,6 +219,7 @@ async function doSwap() {
   const [r0, r1] = await sw.getReserves();
   const out = await sw.getAmountOut(amtIn, toBig ? r1 : r0, toBig ? r0 : r1);
   const minOut = out * 9800n / 10000n;
+  if (!toBig && !(await ensureWbot(amtIn))) return;
   needMsg('Approving…');
   if (!(await ensureAllowance(tokenIn, c.swap, amtIn))) return;
   const swS = new ethers.Contract(c.swap, SWAP_ABI, s);
@@ -215,6 +238,7 @@ async function doAdd() {
   const tw = $('addTw')?.value || '0', lu = $('addLu')?.value || '0';
   if (Number(tw) <= 0 || Number(lu) <= 0) return needMsg('Enter both amounts');
   const aTW = ethers.parseUnits(tw, 18), aLU = ethers.parseUnits(lu, 18);
+  if (!(await ensureWbot(aTW))) return;
   needMsg('Approving…');
   if (!(await ensureAllowance(c.twbot, c.swap, aTW))) return;
   if (!(await ensureAllowance(c.lusd, c.swap, aLU))) return;
